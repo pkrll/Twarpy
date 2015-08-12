@@ -14,7 +14,6 @@
             }
         ],
     "homepage": "https://github.com/pkrll/Twarpy",
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0"
     },

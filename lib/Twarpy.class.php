@@ -5,7 +5,7 @@
  * Lightweight PHP Library for Twitter.
  *
  * @author Ardalan Samimi
- * @version 0.2.0
+ * @version 0.3.0
  */
 
 require_once("OAuthToken.class.php");
@@ -54,13 +54,33 @@ class Twarpy {
         }
     }
 
-    public function verifyCredentials($params = NULL) {
-        $this->setHttpMethod("GET");
-        $this->setRequestURL(self::API_URL . 'account/verify_credentials.json', $params);
+    /**
+     * Public API call method.
+     *
+     * @param   string  The request path (without .json)
+     * @param   string  Optional. The http method to use
+     *                  defaults to GET.
+     * @param   array   Additional parameters to send.
+     * @return  array | string
+     */
+    public function request($request, $httpMethod = 'GET', array $params = NULL) {
+        $this->setHttpMethod($httpMethod);
+        $this->setRequestURL(self::API_URL, $request, $params);
         $params['oauth_token'] = $this->getOAuthToken('oauth_token');
-        $oauth    = $this->buildOAuth($params);
-        $header   = $this->buildOAuthHeader($oauth);
-        $response = $this->makeRequest($this->getRequestURL(), NULL, $header);
+        $oauth = $this->buildOAuth($params);
+        $header = $this->buildOAuthHeader($oauth);
+        // A GET request's parameters are in the query string,
+        // while a POST request will post the parameters.
+        if ($httpMethod === 'GET')
+            $params = NULL;
+        else
+            $this->setRequestURL($this->getRequestURL(TRUE));
+        $response = $this->makeRequest($this->getRequestURL(), $params, $header);
+        return $response;
+    }
+
+    public function getRateLimit() {
+        $response = $this->request('application/rate_limit_status.json');
         return $response;
     }
 
@@ -99,13 +119,22 @@ class Twarpy {
      * Set the request URL. Query strings must be passed
      * seperately for the signing process to work.
      *
-     * @param   string  The URL without a query string.
+     * @param   string  The base URL string.
+     * @param   string  Optional. The URL path, without
+     *                  the query string.
      * @param   string  Optional. A query string.
      */
-    private function setRequestURL($url, $queryString = NULL) {
-        if ($queryString !== NULL)
-            $url .= '?'.http_build_query($queryString);
-        $this->requestURL = $url;
+    private function setRequestURL($base, $path = NULL, $query = NULL) {
+        if ($path !== NULL) {
+            // Add .json extension if not already there.
+            if (strpos($path, '.json') === FALSE)
+                $path .= '.json';
+            $base .= $path;
+        }
+        // The query string must be an array.
+        if ($query !== NULL && is_array($query))
+            $base .= '?' . http_build_query($query);
+        $this->requestURL = $base;
     }
 
     /**
@@ -169,7 +198,7 @@ class Twarpy {
         );
         curl_setopt_array($curlHandle, $curlOptions);
         // The parameters array must be turned into an URL-encoded query string.
-        if ($params !== NULL) {
+        if ($params !== NULL && $this->getHttpMethod() === 'POST') {
             // The access token should not be included in the post data.
             if (array_key_exists("oauth_token", $params))
                 unset($params['oauth_token']);

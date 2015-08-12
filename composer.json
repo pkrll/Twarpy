@@ -1,0 +1,21 @@
+{
+    "name": "saturn/twarpy",
+    "version": "0.3.1",
+    "description": "A simple and small PHP library for accessing the Twitter REST API",
+    "type": "library",
+        "keywords": [
+            "Twarpy", "Twitter"
+        ],
+    "license": "GPL-2.0",
+    "authors": [
+            {
+                "name": "Ardalan Samimi",
+                "role": "Developer"
+            }
+        ],
+    "homepage": "https://github.com/pkrll/Twarpy",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0"
+    }
+}

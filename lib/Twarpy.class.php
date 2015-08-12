@@ -5,8 +5,9 @@
  * Lightweight PHP Library for Twitter.
  *
  * @author Ardalan Samimi
- * @version 0.3.0
+ * @version 0.3.1
  */
+namespace Twarpy;
 
 require_once("OAuthToken.class.php");
 
@@ -79,13 +80,18 @@ class Twarpy {
         return $response;
     }
 
+    /**
+     * Get the current rate limit status
+     *
+     * @return  array
+     */
     public function getRateLimit() {
         $response = $this->request('application/rate_limit_status.json');
         return $response;
     }
 
     /**
-     * Retrieve the HTTP Method to be used or last used.
+     * Get the HTTP Method to be used or last used.
      *
      * @return  string
      */
@@ -138,11 +144,11 @@ class Twarpy {
     }
 
     /**
-     * Retrieve the last retrieved HTTP Code.
+     * Get the last retrieved HTTP Code.
      *
      * @return  int
      */
-    private function getLastHttpCode() {
+    public function getLastHttpCode() {
         return $this->lastHttpCode;
     }
 
@@ -172,7 +178,7 @@ class Twarpy {
      * @param   string  The oauth_token.
      * @param   string  The oauth_token_secret.
      */
-    public function setOAuthToken($public, $secret) {
+    private function setOAuthToken($public, $secret) {
         $this->accessToken = new OAuthToken($public, $secret);
     }
 

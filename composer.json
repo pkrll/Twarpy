@@ -3,9 +3,10 @@
     "version": "0.3.1",
     "description": "A simple and small PHP library for accessing the Twitter REST API",
     "type": "library",
-        "keywords": [
-            "Twarpy", "Twitter"
-        ],
+    "keywords": [
+        "Twarpy", "Twitter"
+    ],
+    "minimum-stability": "dev",
     "license": "GPL-2.0",
     "authors": [
             {

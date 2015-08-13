@@ -1,6 +1,5 @@
 {
     "name": "saturn/twarpy",
-    "version": "1.0",
     "description": "A simple and small PHP library for accessing the Twitter REST API",
     "type": "library",
     "keywords": [

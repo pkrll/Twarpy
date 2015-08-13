@@ -10,6 +10,7 @@
 namespace Twarpy;
 
 require_once("OAuthToken.php");
+require_once("TwarpyException.php");
 
 class Twarpy {
 

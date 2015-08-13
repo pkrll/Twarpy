@@ -6,7 +6,7 @@
  * @version 1.0
  */
 namespace Twarpy;
- 
+
 class OAuthToken {
 
     private $oauth_token;

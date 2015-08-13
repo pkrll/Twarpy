@@ -5,11 +5,11 @@
  * Lightweight PHP Library for Twitter.
  *
  * @author Ardalan Samimi
- * @version 0.3.1
+ * @version 1.0
  */
 namespace Twarpy;
 
-require_once("OAuthToken.class.php");
+require_once("OAuthToken.php");
 
 class Twarpy {
 

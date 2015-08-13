@@ -5,6 +5,7 @@ class TwarpyTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @runInSeparateProcess
+     * @expectedException TwarpyException
      */
     public function testAuthAndTimeline() {
         $config = array(

@@ -1,4 +1,4 @@
-## Twarpy
+## Twarpy [![Build Status](https://travis-ci.org/pkrll/Twarpy.svg?branch=master)](https://travis-ci.org/pkrll/Twarpy) [![Latest Stable Version](https://poser.pugx.org/saturn/twarpy/v/stable)](https://packagist.org/packages/saturn/twarpy) [![License](https://poser.pugx.org/saturn/twarpy/license)](https://packagist.org/packages/saturn/twarpy)
 A simple and small PHP library for accessing Twitter's REST API (v1.1). For the time being, Twarpy supports only 3-legged OAuth. This is still a work in progress. More features will be added.
 #### Requirements
 * PHP >= version 5.3.

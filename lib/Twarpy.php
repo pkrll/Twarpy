@@ -5,7 +5,7 @@
  * Lightweight PHP Library for Twitter.
  *
  * @author Ardalan Samimi
- * @version 1.0
+ * @version 1.0.1
  */
 namespace Twarpy;
 
@@ -41,11 +41,10 @@ class Twarpy {
      *                  consumerSecret.
      */
     public function __construct($config) {
-        foreach ($config as $key => $value)
-            if (property_exists($this, $key))
-                $this->$key = $value;
-        if ($this->consumerKey === NULL || $this->consumerSecret === NULL)
+        if (!isset($config['consumerKey']) || !isset($config['consumerSecret']))
             throw new Exception("No consumer key or consumer secret set.");
+        $this->consumerKey = $config['consumerKey'];
+        $this->consumerSecret = $config['consumerSecret'];
         if (!isset($config['oauthToken']) || !isset($config['oauthTokenSecret'])) {
             if ($this->authorization() === FALSE) {
                 throw new Exception("Authorization failed. An error occured.");

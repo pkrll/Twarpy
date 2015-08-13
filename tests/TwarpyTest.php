@@ -3,6 +3,9 @@ use Twarpy\Twarpy;
 
 class TwarpyTest extends \PHPUnit_Framework_TestCase {
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testAuthAndTimeline() {
         $config = array(
             'consumerKey'       => getenv('consumerKey'),

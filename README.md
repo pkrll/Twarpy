@@ -1,9 +1,31 @@
-### Twarpy
+## Twarpy
 A simple and small PHP library for accessing Twitter's REST API (v1.1). For the time being, Twarpy supports only 3-legged OAuth. This is still a work in progress. More features will be added.
-##### Requirements
+#### Requirements
 * PHP >= version 5.3.
 * Curl extension.
 
+#### Installation
+There are two ways to install Twarpy. If you prefer using composer, just run the following command in the terminal at the root directory of your project:
+```bash
+$ composer require saturn/twarpy
+```
+You can also include it as a dependency in your composer.json file and then run ``composer update``:
+```
+{
+    "require": {
+        "saturn/twarpy": "^1.0"
+    }
+}
+```
+You can also download the source directly and include it in your project directory manually, or clone this repository:
+```bash
+$ git clone git://github.com/pkrll/Twarpy.git
+```
+Do not forget to include it in your project. If you've installed Twarpy with Composer, you can use the autoloader:
+```php
+use Twarpy\Twarpy;
+include __DIR__ . "/vendor/autoload.php";
+```
 #### Usage
 * The first step is to register your application with [Twitter](https://apps.twitter.com).
 * Copy the consumer key and consumer secret (never share these keys with anyone).
@@ -23,10 +45,10 @@ $Twarpy = new Twarpy($config);
 // run Twarpy for that user you can include the tokens in the config array.
 $tokens = $Twarpy->getOAuthToken(); // returns array("oauth_token" => ???, "oauth_token_secret" => ???)
 ```
-* Making requests to the Twitter API is supereasy. All you need is the http method (GET/POST), the api path and, if needed, a parameters array. Consult the Twitter API documentation for available requests.
+Making requests to the Twitter API is supereasy. All you need is the http method (GET/POST), the api path and, if needed, a parameters array. Consult the Twitter API documentation for available requests.
 ```php
 $params = array("screen_name" => "twitter");
-$data = $Twarpy->request('statuses/user_timeline', 'GET', $params); // Returns an array or string upon error
+$data = $Twarpy->request('statuses/user_timeline', 'GET', $params);
 ```
 #### Author
 * Twarpy is brain child of Ardalan Samimi.

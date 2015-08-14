@@ -5,12 +5,11 @@
  * Lightweight PHP Library for Twitter.
  *
  * @author Ardalan Samimi
- * @version 1.0.1
+ * @version 1.0.2
  */
 namespace Twarpy;
 
 require_once("OAuthToken.php");
-require_once("TwarpyException.php");
 
 class Twarpy {
 
@@ -43,12 +42,12 @@ class Twarpy {
      */
     public function __construct($config) {
         if (!isset($config['consumerKey']) || !isset($config['consumerSecret']))
-            throw new TwarpyException("No consumer key or consumer secret set.");
+            throw new \Exception("No consumer key or consumer secret set.");
         $this->consumerKey = $config['consumerKey'];
         $this->consumerSecret = $config['consumerSecret'];
         if (!isset($config['oauthToken']) || !isset($config['oauthTokenSecret'])) {
             if ($this->authorization() === FALSE) {
-                throw new TwarpyException("Authorization failed. An error occured.");
+                throw new \Exception("Authorization failed. An error occured.");
             }
         } else {
             $this->setOAuthToken($config['oauthToken'], $config['oauthTokenSecret']);
@@ -169,7 +168,9 @@ class Twarpy {
      * @return  array | string
      */
     public function getOAuthToken($part = NULL) {
-        return $this->accessToken->getOAuthToken($part);
+        if ($this->accessToken !== NULL)
+            return $this->accessToken->getOAuthToken($part);
+        return NULL;
     }
 
     /**
@@ -235,7 +236,7 @@ class Twarpy {
             $response = $this->fetchRequestToken();
             // Check if authorization failed
             if (isset($response["error"]))
-                throw new TwarpyException("Authorization failed: {$response['errors'][0]['message']}");
+                throw new \Exception("Authorization failed: {$response['errors'][0]['message']}");
             // The response will include three parameters
             // that needs to be split into an array.
             $requestToken = $this->splitQueryString($response);
@@ -256,7 +257,7 @@ class Twarpy {
             );
             $response = $this->makeRequest($this->getRequestURL(), $params, $header);
             if ($this->getLastHttpCode() !== 200)
-                throw new TwarpyException("Authorization failed: {$response}");
+                throw new \Exception("Authorization failed: {$response}");
             // Retrieve the access token and token secret
             $tokens = $this->splitQueryString($response);
             $this->setOAuthToken($tokens['oauth_token'], $tokens['oauth_token_secret']);

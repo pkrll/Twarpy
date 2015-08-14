@@ -5,20 +5,22 @@ class TwarpyTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @runInSeparateProcess
-     * @expectedException TwarpyException
      */
-    public function testAuthAndTimeline() {
+    public function testRequest() {
         $config = array(
             'consumerKey'       => getenv('consumerKey'),
-            'consumerSecret'    => getenv('consumerSecret')
+            'consumerSecret'    => getenv('consumerSecret'),
+            'oauthToken'    => getenv('oauthToken'),
+            'oauthTokenSecret'    => getenv('oauthTokenSecret')
         );
-
-        $Twarpy = new Twarpy($config);
-        $this->assertInternalType('array', $Twarpy->getOAuthToken());
-
-        $params = array("screen_name" => "twitter");
-        $data = $Twitter->request('statuses/user_timeline', 'GET', $params);
-        $this->assertInternalType('array', $data);
+        try {
+            $twarpy = new Twarpy($config);
+            $params = array("screen_name" => "twitter");
+            $data = $twarpy->request('statuses/user_timeline', 'GET', $params);
+            $this->assertInternalType('array', $data);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
 }

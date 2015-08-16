@@ -49,7 +49,7 @@ class TwarpyTest extends \PHPUnit_Framework_TestCase {
      */
     public function testPOSTWithTreeLeggedOAuth() {
         try {
-            $params = array("status" => "The Three Legged POST test 8. #twarpy");
+            $params = array("status" => "Testing #Twarpy - " . time());
             $data = $this->TwarpyThreeLegged->request('statuses/update', 'POST', $params);
             $this->assertInternalType('array', $data);
         } catch (Exception $e) {

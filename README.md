@@ -1,5 +1,5 @@
 ## Twarpy [![Build Status](https://travis-ci.org/pkrll/Twarpy.svg?branch=master)](https://travis-ci.org/pkrll/Twarpy) [![Latest Stable Version](https://poser.pugx.org/saturn/twarpy/v/stable)](https://packagist.org/packages/saturn/twarpy) [![License](https://poser.pugx.org/saturn/twarpy/license)](https://packagist.org/packages/saturn/twarpy)
-A simple and small PHP library for accessing Twitter's REST API (v1.1). For the time being, Twarpy supports only 3-legged OAuth. This is still a work in progress. More features will be added.
+A simple and small PHP library for accessing Twitter's REST API (v1.1) using 3-Legged OAuth or Application-only tokens.
 #### Requirements
 * PHP >= version 5.3.
 * Curl extension.
@@ -29,7 +29,8 @@ include __DIR__ . "/vendor/autoload.php";
 #### Usage
 * The first step is to register your application with [Twitter](https://apps.twitter.com).
 * Copy the consumer key and consumer secret (never share these keys with anyone).
-* Create the Twarpy object as shown below. Twarpy uses the 3-legged OAuth flow, which means the user must authorize the application in order to make authorized requests. When running Twarpy for the first time for a given user, the app will retrieve an access token. So set these fields to NULL if you do not have them (remember to save the tokens once you've retrieved them, by using the command ``getOAuthToken()``, preferably in a database).
+* Twarpy can be initialized using a 3-legged OAuth flow, which means the user must authorize the application in order to make authorized requests, or using Application-only authentication.
+* When running Twarpy for the first time for a given user, the app will retrieve an access token. So set these fields to NULL if you do not have them (remember to save the tokens once you've retrieved them, by using the command ``getOAuthToken()``, preferably in a database).
 ```php
 $config = array(
   "consumerKey"       => "YOURCONSUMERKEY",
@@ -40,8 +41,8 @@ $config = array(
 // Create the Twarpy object. If no oauth token or token secret
 // is set in the config array, Twarpy will first attempt to auth
 // the user.
-$Twarpy = new Twarpy($config);
-// Save the oauth token and oauth token secret The next time you 
+$Twarpy = new Twarpy($config, THREE_LEGGED);
+// Save the oauth token and oauth token secret The next time you
 // run Twarpy for that user you can include the tokens in the config array.
 $tokens = $Twarpy->getOAuthToken(); // returns array("oauth_token" => ???, "oauth_token_secret" => ???)
 ```

@@ -83,5 +83,26 @@ Making requests to the Twitter API is supereasy. All you need is the http method
 $params = array("screen_name" => "twitter");
 $data = $Twarpy->request('statuses/user_timeline', 'GET', $params);
 ```
+###### Example request
+```php
+use Twarpy\Twarpy;
+include __DIR__ . "/vendor/autoload.php";
+
+$config = array(
+    'consumer_key'      => "YOURCONSUMERKEY",
+    'consumer_secret'   => "YOURCONSUMERSECRET",
+    'access_token'      => 'YOURACCESSTOKEN',
+    'token_secret'      => 'YOURSECRETTOKEN'
+);
+
+try {
+    $twarpy = new Twarpy($config, THREE_LEGGED);
+    $tweet  = array("status" => "Testing Twarpy! #Twarpy");
+    $data   = $twarpy->request('statuses/update', 'POST', $tweet);
+    print_r($data);
+} catch (Exception $e) {
+    print_r($e->getMessage());
+}
+```
 #### Author
 * Twarpy is brain child of Ardalan Samimi.

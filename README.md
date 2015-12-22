@@ -31,8 +31,8 @@ include __DIR__ . "/vendor/autoload.php";
 * Copy the consumer key and consumer secret (never share these keys with anyone).
 
 ##### Using 3-Legged OAuth
-* Using 3-Legged OAUth flow allows the app to read or post to Twitter on the users behalf. But the user must authenticate each requests. 
-* To initialize Twarpy with this auth method, you need the previously collected consumer key and secret tokens along with an oauth token and oauth secret. If a user has not authenticated the app, they will be redirected to Twitter.com. Upon authorization, the application will collect the newly granted access token (remember to save the tokens once you've retrieved them by using the command ``getOAuthToken()``, so that the user does not need to authenticate each request manually).
+* Using 3-Legged OAUth flow allows the app to read or post to Twitter on the users behalf. But the user must authenticate each requests.
+* To initialize Twarpy with this auth method, you need the previously collected consumer key and secret tokens along with an oauth token and oauth secret. If a user has not authenticated the app, they will be redirected to Twitter.com. Upon authorization, the application will collect the newly granted access token (remember to save the tokens once you've retrieved them by using the method ``getAccessToken()``, so that the user does not need to authenticate each request manually).
 * Create a new Twarpy object, with an array containing the configuration and a constant representing the auth method:
 ```php
 $config = array(
@@ -42,7 +42,7 @@ $config = array(
 $Twarpy = new Twarpy($config, THREE_LEGGED);
 // Save the oauth token and oauth token secret The next time you
 // run Twarpy for that user you can include the tokens in the config array.
-$tokens = $Twarpy->getOAuthToken(); // returns array("access_token" => ???, "token_secret" => ???)
+$tokens = $Twarpy->getAccessToken(); // returns array("access_token" => ???, "token_secret" => ???)
 ```
 * Next time you want to make an API call on that users behalf, you can include the retrieved tokens in the ``$config``-array:
 ```php
@@ -55,7 +55,7 @@ $config = array(
 $Twarpy = new Twarpy($config, THREE_LEGGED);
 ```
 ##### Using Application-only auth
-* The app-only auth method is similary to the 3-Legged method, but does not require the user to authenticate the application. This auth method does not allow for requests that require user context, like creating or deleting tweets.
+* The app-only auth method is similarly to the 3-Legged method, but does not require the user to authenticate the application. This auth method does not allow for requests that require user context, like creating or deleting tweets.
 * To initialize Twarpy with this auth method, you need the previously collected consumer key and secret tokens.
 * Create the Twarpy object and use the constant ``APP_ONLY`` as the second parameter:
 ```php
@@ -65,7 +65,7 @@ $config = array(
 );
 $Twarpy = new Twarpy($config, APP_ONLY);
 
-$tokens = $Twarpy->getOAuthToken();
+$tokens = $Twarpy->getAccessToken();
 // returns array("access_token" => ???)
 ```
 * Save the access token for faster requests and include in the ``$config``-array with the key ``access_token`` (please note, this method does not require a secret token).

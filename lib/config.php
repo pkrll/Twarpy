@@ -1,6 +1,6 @@
 <?php
 define("APP_NAME", "Twarpy");
-define("APP_VERSION", "2.0");
+define("APP_VERSION", "2.0.0");
 // Auth methods
 define("APP_ONLY", 2);
 define("THREE_LEGGED", 3);
